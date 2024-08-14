@@ -3,19 +3,52 @@ class App extends React.Component {
       super(props)
     
       this.state = {
-         dude: "Marceline the vampire"
+         dude: "Marceline the vampire",
+         characters: [
+            {
+                "id": 1,
+                "who": "Finn the human",
+                "wat": "A silly kid who wants to become a great hero.",
+                "cool": 12
+            },
+            {
+                "id": 2,
+                "who": "Jake the Dog",
+                "wat": "Finns best friend.",
+                "cool": 43
+            }
+         ]
       }
+    }
+
+    handleChange = event =>{
+        this.setState({
+            dude: event.target.value
+        })
     }
     
 
     render(){
-        return <div>
-            <p>
-                My good friend <strong>{this.state.dude}</strong>.
-                <br/>
-                I like {this.state.dude}.
-            </p>
-        </div>
+        const dudes = this.state.characters.map(dude => (
+            <li key={dude.id}>{dude.who}</li>
+        ))
+
+        return(
+            <div>
+                <ul>{dudes}</ul>
+
+                <form className="add-new">
+                    <input type="text"
+                        value={this.state.dude}
+                        onChange={this.handleChange}
+                    />
+                </form>
+
+                <p className="preview">
+                    {this.state.dude}
+                </p>
+            </div>
+        )
     }
 }
 
