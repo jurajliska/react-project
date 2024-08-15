@@ -30,7 +30,15 @@ class App extends React.Component {
 
     render(){
         const dudes = this.state.characters.map(dude => (
-            <li key={dude.id}>{dude.who}</li>
+            <li key={dude.id}>
+                {dude.who}
+
+                {dude.who.split(' ').length < 3 && (
+                    <small>
+                        <strong> - lol, short name</strong>
+                    </small>
+                )}
+            </li>
         ))
 
         return(
@@ -38,7 +46,8 @@ class App extends React.Component {
                 <ul>{dudes}</ul>
 
                 <form className="add-new">
-                    <input type="text"
+                    <input 
+                        type="text"
                         value={this.state.dude}
                         onChange={this.handleChange}
                     />
