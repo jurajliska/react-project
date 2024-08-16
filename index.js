@@ -21,15 +21,9 @@ class App extends React.Component {
       }
     }
 
-    handleChange = event =>{
-        this.setState({
-            dude: event.target.value
-        })
-    }
-    
-
-    render(){
-        const dudes = this.state.characters.map(dude => (
+    // List of dudes component
+    listOfDudes = () => {
+        return this.state.characters.map(dude => (
             <li key={dude.id}>
                 {dude.who}
 
@@ -40,12 +34,34 @@ class App extends React.Component {
                 )}
             </li>
         ))
+    }
 
+    handleChange = event =>{
+        this.setState({
+            dude: event.target.value
+        })
+    }
+
+    handleSubmit = event =>{
+        event.preventDefault()
+
+        const newDude = {
+            "id": 99,
+            "who": this.state.dude,
+            "wat": this.state.dude,
+            "cool": 15
+        }
+
+        
+    }
+    
+    // Template
+    render(){
         return(
             <div>
-                <ul>{dudes}</ul>
+                <ul>{this.listOfDudes()}</ul>
 
-                <form className="add-new">
+                <form className="add-new" onSubmit={this.handleSubmit}>
                     <input 
                         type="text"
                         value={this.state.dude}
