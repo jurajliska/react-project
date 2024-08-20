@@ -52,7 +52,11 @@ class App extends React.Component {
             "cool": 15
         }
 
-        
+        this.setState(state => { 
+            return {
+                characters: [ ...state.characters, newDude ]
+            }
+        })
     }
     
     // Template
