@@ -3,7 +3,8 @@ class App extends React.Component {
       super(props)
     
       this.state = {
-         dude: "Marceline the vampire",
+         newWho: "Marceline the vampire",
+         newWat: "A wild rocket girl.",
          characters: [
             {
                 "id": 1,
@@ -24,39 +25,49 @@ class App extends React.Component {
     // List of dudes component
     listOfDudes = () => {
         return this.state.characters.map(dude => (
-            <li key={dude.id}>
-                {dude.who}
+            <li key={dude.id} className="dude">
+                <a className="ctrl">x</a>
 
-                {dude.who.split(' ').length < 3 && (
-                    <small>
-                        <strong> - lol, short name</strong>
-                    </small>
-                )}
+                <article className="">
+                    {dude.who}
+                    <span>{dude.wat}</span>
+                </article>
+
+                <input className="ctrl" type="number" value={dude.cool}></input>
             </li>
         ))
     }
 
-    handleChange = event =>{
+    // save new who
+    handleWho = event =>{
         this.setState({
-            dude: event.target.value
+            newWho: event.target.value
         })
     }
 
-    handleSubmit = event =>{
-        event.preventDefault()
-
-        const newDude = {
-            "id": 99,
-            "who": this.state.dude,
-            "wat": this.state.dude,
-            "cool": 15
-        }
-
-        this.setState(state => { 
-            return {
-                characters: [ ...state.characters, newDude ]
-            }
+    // save new wat
+    handleWat = event =>{
+        this.setState({
+            newWat: event.target.value
         })
+    }
+
+    // add new dude
+    handleSubmit = event => {
+        if ( event.key === 'Enter'){
+            this.setState(state => {
+                const newDude = {
+                    "id": Math.max( ...state.characters.map(d => d.id) ) + 1,
+                    "who": this.state.newWho,
+                    "wat": this.state.newWat,
+                    "cool": 15
+                }
+    
+                return {
+                    characters: [ ...state.characters, newDude ]
+                }
+            })
+        }
     }
     
     // Template
@@ -65,16 +76,24 @@ class App extends React.Component {
             <div>
                 <ul>{this.listOfDudes()}</ul>
 
-                <form className="add-new" onSubmit={this.handleSubmit}>
+                <form className="add-new" onKeyPress={this.handleSubmit}>
                     <input 
                         type="text"
-                        value={this.state.dude}
-                        onChange={this.handleChange}
+                        value={this.state.newWho}
+                        onChange={this.handleWho}
+                    />
+
+                    <input 
+                        type="text"
+                        value={this.state.newWat}
+                        onChange={this.handleWat}
                     />
                 </form>
 
                 <p className="preview">
-                    {this.state.dude}
+                    {this.state.newWho}
+                    <br />
+                    <small>{this.state.newWat}</small>
                 </p>
             </div>
         )
