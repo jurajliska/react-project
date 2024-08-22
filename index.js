@@ -10,13 +10,13 @@ class App extends React.Component {
                 "id": 1,
                 "who": "Finn the human",
                 "wat": "A silly kid who wants to become a great hero.",
-                "cool": 12
+                "cool": 69
             },
             {
                 "id": 2,
                 "who": "Jake the Dog",
                 "wat": "Finns best friend.",
-                "cool": 43
+                "cool": 8
             }
          ]
       }
@@ -28,12 +28,14 @@ class App extends React.Component {
             <li key={dude.id} className="dude">
                 <a className="ctrl">x</a>
 
-                <article className="">
+                <article className={
+                    dude.cool < 10 ? "faded" : dude.cool > 50 ? "gold" : ""
+                }>
                     {dude.who}
                     <span>{dude.wat}</span>
                 </article>
 
-                <input className="ctrl" type="number" value={dude.cool}></input>
+                <input className="ctrl" type="number" value={dude.cool} onChange={this.handleCool(dude)}/>
             </li>
         ))
     }
@@ -50,6 +52,23 @@ class App extends React.Component {
         this.setState({
             newWat: event.target.value
         })
+    }
+
+    // update cool
+    handleCool = dude => event =>{
+        // this.setState({
+        //     newWat: event.target.value
+        // })
+        const cool = +event.target.value
+
+        this.setState(state => { 
+            return { 
+                characters: state.characters.map(item =>
+                    item === dude ? { ...dude, cool } : item
+                )
+             }
+        })
+        
     }
 
     // add new dude
