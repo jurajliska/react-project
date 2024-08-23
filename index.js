@@ -26,7 +26,7 @@ class App extends React.Component {
     listOfDudes = () => {
         return this.state.characters.map(dude => (
             <li key={dude.id} className="dude">
-                <a className="ctrl">x</a>
+                <a className="ctrl" onClick={() => this.removeDude(dude)}>x</a>
 
                 <article className={
                     dude.cool < 10 ? "faded" : dude.cool > 50 ? "gold" : ""
@@ -56,9 +56,6 @@ class App extends React.Component {
 
     // update cool
     handleCool = dude => event =>{
-        // this.setState({
-        //     newWat: event.target.value
-        // })
         const cool = +event.target.value
 
         this.setState(state => { 
@@ -66,6 +63,16 @@ class App extends React.Component {
                 characters: state.characters.map(item =>
                     item === dude ? { ...dude, cool } : item
                 )
+             }
+        })
+        
+    }
+
+    // remove dude
+    removeDude = dude => {
+        this.setState(state => { 
+            return { 
+                characters: state.characters.filter(item => item !== dude)
              }
         })
         
