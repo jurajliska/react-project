@@ -1,25 +1,21 @@
 class App extends React.Component {
     constructor(props) {
       super(props)
+
+      this.input = React.createRef()
     
       this.state = {
          newWho: "Marceline the vampire",
          newWat: "A wild rocket girl.",
-         characters: [
-            {
-                "id": 1,
-                "who": "Finn the human",
-                "wat": "A silly kid who wants to become a great hero.",
-                "cool": 69
-            },
-            {
-                "id": 2,
-                "who": "Jake the Dog",
-                "wat": "Finns best friend.",
-                "cool": 8
-            }
-         ]
+         characters: []
       }
+    }
+
+    // load my dudes
+    componentDidMount = () => {
+        fetch("https://api.npoint.io/c6b03d3d2185805f2467")
+            .then(res => res.json())
+            .then(json => this.setState({ characters: json }))
     }
 
     // List of dudes component
@@ -80,7 +76,7 @@ class App extends React.Component {
 
     // add new dude
     handleSubmit = event => {
-        if ( event.key === 'Enter'){
+        if ( event.key === 'Enter' && this.state.newWho && this.state. newWat){
             this.setState(state => {
                 const newDude = {
                     "id": Math.max( ...state.characters.map(d => d.id) ) + 1,
@@ -93,7 +89,19 @@ class App extends React.Component {
                     characters: [ ...state.characters, newDude ]
                 }
             })
+
+            this.resetForm()
         }
+    }
+
+    // reset form
+    resetForm = () => {
+        this.setState({
+            newWho: "",
+            newWat: ""
+        })
+
+        this.input.current.focus()
     }
     
     // Template
@@ -103,8 +111,10 @@ class App extends React.Component {
                 <ul>{this.listOfDudes()}</ul>
 
                 <form className="add-new" onKeyPress={this.handleSubmit}>
-                    <input 
+                    <input
+                        autoFocus
                         type="text"
+                        ref={this.input}
                         value={this.state.newWho}
                         onChange={this.handleWho}
                     />
