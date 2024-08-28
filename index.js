@@ -5,8 +5,8 @@ class App extends React.Component {
       this.input = React.createRef()
     
       this.state = {
-         newWho: "Marceline the vampire",
-         newWat: "A wild rocket girl.",
+         newWho: "",
+         newWat: "",
          characters: []
       }
     }
