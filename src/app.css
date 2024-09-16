@@ -221,11 +221,25 @@ input.ctrl {
   }
 }
 .dude-enter-active,
-.dude-leave-active {
+.dude-exit-active {
   transition: all 0.2s;
 }
-.dude-enter,
-.dude-leave-to {
+
+.dude-enter{
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.dude-enter-active{
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.dude-exit{
+  opacity: 1;
+}
+
+.dude-exit-active{
   opacity: 0;
   transform: scale(0.5);
 }
