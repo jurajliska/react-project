@@ -27,7 +27,7 @@ class App extends React.Component {
   // List of dudes component
   listOfDudes = () => {
       return this.state.characters.map(dude => (
-          <CSSTransition key={dude.li} timeout={200} classNames="dude">
+          <CSSTransition key={dude.id} timeout={200} classNames="dude">
             <li key={dude.id} className="dude">
                 <a className="ctrl" onClick={() => this.removeDude(dude)}>x</a>
 
